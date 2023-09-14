@@ -16,7 +16,8 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void Tap(Vector2 position)
     {
-        m_raycastBehaviour.TryDoDamage(position);
+        Vector2 tapPos = Camera.main.ScreenToWorldPoint(position);
+        m_raycastBehaviour.TryDoDamage(tapPos);
     }
 
     /// <summary>
