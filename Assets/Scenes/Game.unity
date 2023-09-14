@@ -610,10 +610,10 @@ MonoBehaviour:
   maxMag: 0
   frases:
   - Mondongo
-  - alskd
-  - place holder
-  - asd
-  - asdas
+  - haber cactus quedate quieto un momento
+  - Ahora vivo en sintonia con la pacha mama
+  - Prueba Juancarlos esta esquisito fijate
+  - No se *explota*
   m_enemyManager: {fileID: 1238249139}
 --- !u!4 &8530973791654873663
 Transform:
