@@ -25,7 +25,11 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void Press(bool pressed, Vector2 position)
     {
-        m_playerController.PrepareJump();
+        Vector2 jumpTarget = Camera.main.ScreenToWorldPoint(position);
+
+        if(pressed) m_playerController.PrepareJump();
+
+        else m_playerController.Jump(jumpTarget);
     }
 
     /// <summary>
@@ -33,11 +37,10 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void SwipeLeft()
     {
-        if(playerPos.x > -5f)
-        {
+      
             m_playerController.MoveTo(new Vector2(-1, 0));
            
-        }
+        
         
     }
 
@@ -46,11 +49,10 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void SwipeRight()
     {
-        if(playerPos.x < 5f)
-        {
+      
             m_playerController.MoveTo(new Vector2(1, 0));
             
-        }
+        
        
     }
 
@@ -59,11 +61,10 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void SwipeUp()
     {
-        if(playerPos.y < 5f)
-        {
+      
             m_playerController.MoveTo(new Vector2(0, 1));
             
-        }
+        
         
     }
 
@@ -72,11 +73,10 @@ public class InputBehaviour : MonoBehaviour
     /// </summary>
     private void SwipeDown()
     {
-        if(playerPos.y > -5f)
-        {
+       
             m_playerController.MoveTo(new Vector2(0, -1));
-            
-        }
+           
+        
         
     }
 

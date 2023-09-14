@@ -19,7 +19,10 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         // Hmm, no recuerdo como spawnear un numero determinado de enemigos a la vez...
-
+        for (int i = 0; i < 5; i++)
+        {
+            SpawnEnemy();
+        }
     }
 
     /// <summary>
@@ -27,9 +30,10 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     private void SpawnEnemy()
     {
-        float x = Random.Range(-5f,6f);
-        float y = Random.Range(-5f, 6f);
-        GameObject enemy= Instantiate(m_enemyPrefab, transform.position + new Vector3 (x,y), transform.rotation) ;
+        float x = Random.Range(-5,6);
+        float y = Random.Range(-5, 6);
+        Vector2 spawnPos = Camera.main.ScreenToWorldPoint(new Vector2(x,y));
+        GameObject enemy= Instantiate(m_enemyPrefab, new Vector2(x,y), transform.rotation) ;
         // Y ahora no recuerdo commo se spawnean...
         m_instantiatedEnemies.Add(enemy);
         // Tambien me gustaria añadirlos a una lista ya creada...

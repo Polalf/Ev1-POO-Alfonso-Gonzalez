@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimationCurve m_jumpCurve;
     [SerializeField] private float maxMag;
     [SerializeField] private List<string> frases;
-    private Queue<string>frasesToGame;
-
+    private Queue<string>frasesToGame =  new Queue<string>();
+    private bool canJump;
     // Ojala tuviera una lista de strings que me hicieran reir...
 
     [Header("References")]
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         if (m_isInCooldown) return;
         int x = Random.Range(0,frases.Count);
         // Hmm, me gustaria añadir un texto aleatorio de mi lista chistosa a una Queue...
-        frasesToGame.Enqueue(frases[x]);   
+        frasesToGame.Enqueue(frases[x]);
 
         StartCoroutine(Cooldown());
     }
@@ -58,15 +58,21 @@ public class PlayerController : MonoBehaviour
     /// Moverse haciendo tween a una direccion especifica.
     /// </summary>
     public void MoveTo(Vector2 direction)
-    {
+    {  
         // Comparar si es el turno del jugador y si se puede mover
         if (!m_isPlayerTurn) return;
         if (m_isMoving) return;
 
         // Me gustaria que no se pudiera salir de la grilla...
+       if(direction.x + transform.position.x == 6 || direction.x + transform.position.x == -6)
+       {
+            return;
+       }
 
-        
-
+        if(direction.y + transform.position.y == 6 || direction.y + transform.position.y == -6)
+        {
+            return;
+        }
         // Hacer que se mueva bonito.
         if (m_movementCoroutine != null) StopCoroutine(m_movementCoroutine);
         m_movementCoroutine = StartCoroutine(MovementAnimation(direction));
@@ -84,8 +90,12 @@ public class PlayerController : MonoBehaviour
         // Me gustaria comparar si existe mas de una cadena de texto en mi queue...
         if(frasesToGame.Count >0)
         {
+            canJump = true;
             
+            Debug.Log(frasesToGame.Dequeue());
         }
+        else canJump = false;
+        
 
         // Y si fuera asi activar un booleano para saltar...
 
@@ -95,7 +105,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Saltar al punto de destino.
     /// </summary>
-    public void Jump(Vector2 worldPosition, bool canJump)
+    public void Jump(Vector2 worldPosition)
     {
         // Me gustaria comprobar si puedo saltar reemplazando true por un booleano...
         if (canJump)
@@ -120,7 +130,7 @@ public class PlayerController : MonoBehaviour
         // Ojala tuviera una lista con todos los enemigos...
         for (int i = 0; i < m_enemyManager.m_instantiatedEnemies.Count; i++)
         {
-            if(gameObject.transform.position == m_enemyManager.m_instantiatedEnemies[i].transform.position)
+            if(position == (Vector2)m_enemyManager.m_instantiatedEnemies[i].transform.position)
             {
                 Debug.Log("Perdiste");
                 SceneManager.LoadScene(0);
